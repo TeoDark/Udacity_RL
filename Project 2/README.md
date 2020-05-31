@@ -19,7 +19,7 @@ The observation space consists of 33 variables corresponding to position, rotati
 
 Udacity provide two versions of environment: a) The first version contains a single agent. b) The second version contains 20 identical agents, each with its own copy of the environment. In presented project second one environment was used. The barrier for solving the second version of the environment is slightly different, to take into account the presence of many agents. In particular, agents must get an average score of +30 (over 100 consecutive episodes, and over all agents).
 
-![Alt Text](./Gifs/after.gif)
+![Alt Text](./Images/after.gif)
 
 ## Getting Started
 
