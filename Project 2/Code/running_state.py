@@ -1,7 +1,7 @@
 from collections import deque
 
 import numpy as np
-
+import pickle, codecs
 
 # from https://github.com/joschu/modular_rl
 # http://www.johndcook.com/blog/standard_deviation/
@@ -10,6 +10,15 @@ class RunningStat(object):
         self._n = 0
         self._M = np.zeros(shape)
         self._S = np.zeros(shape)
+
+    def __str__(self):
+        all_params = {"n":self.n, 
+            #"m":str(np.array_str(self.mean)), 
+            #"s":str(np.array_str(self.sum_square))
+            "m":codecs.encode(pickle.dumps(self.mean), "base64").decode(),
+            "s":codecs.encode(pickle.dumps(self.sum_square), "base64").decode()
+            }
+        return str(all_params)
 
     def push(self, x):
         x = np.asarray(x)

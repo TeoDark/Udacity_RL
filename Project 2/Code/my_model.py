@@ -9,8 +9,8 @@ class Actor(nn.Module):
         self.num_outputs = num_outputs
 
         self.fc1 = nn.Linear(num_inputs, hidden_size)
-        self.fc2 = nn.Linear(hidden_size, hidden_size)
-        self.fc3 = nn.Linear(hidden_size, num_outputs)
+        self.fc2 = nn.Linear(hidden_size, int(hidden_size/4))
+        self.fc3 = nn.Linear(int(hidden_size/4), num_outputs)
         self.elu = nn.ELU()
         #self.tanh = nn.Tanh()
         #self.fc4 = nn.Linear(hidden_size, num_outputs)
@@ -29,8 +29,8 @@ class Critic(nn.Module):
     def __init__(self, num_inputs, hidden_size):
         super(Critic, self).__init__()
         self.fc1 = nn.Linear(num_inputs, hidden_size)
-        self.fc2 = nn.Linear(hidden_size, hidden_size)
-        self.fc3 = nn.Linear(hidden_size, 1)
+        self.fc2 = nn.Linear(hidden_size, int(hidden_size/4))
+        self.fc3 = nn.Linear(int(hidden_size/4), 1)
         self.elu = nn.ELU()
         #self.tanh = nn.Tanh()
         self.fc3.weight.data.mul_(0.1)
