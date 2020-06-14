@@ -27,7 +27,7 @@ The environment is considered solved, when the average (over 100 episodes) of th
 
 Inspect 'Report.md' for detail about learning process and experiment.
 
-Run 'tennis.ipynb' cell by cell to re-create experiment.
+To recreate experiment: a) run "python main.py" (faster way) or b) run 'tennis.ipynb' jupter notebook cell by cell as notebooks are more flexible and great to play with (but change max_episodes to larger as for now max_episodes is set to 200 for testing).
 
 ## Installation guide
 
@@ -47,7 +47,7 @@ Enviroment is a bit different than provided by Unity for example it has also Imp
 
 3. Place the unziped Unity environment file in the folder: "tennis_unity_env"  within project. 
 
-4. Run code cell by cell in tennis.ipynb to recreate experiment and learn SAC to solve Tennis environment.
+4. Run code by: a) run "python main.py" b) run cell by cell jupter notebook: tennis.ipynb (after chaning max_episode value) to recreate experiment and learn agent with SAC to solve Tennis environment.
 
 ## References
 

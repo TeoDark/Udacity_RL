@@ -42,8 +42,7 @@ SoftQNetwork:
 PolicyNetwork:
 
 - 24 inputs (as observation space), 2 output
-- 2 fully connected layers with: 512 -> 512  neurons in each layer and then 
-two parallel layers one for computing mean and second for computing log_std - each has number same as number of actions: 2
+- 2 fully connected layers with: 512 -> 512  neurons in each layer and then two parallel layers one for computing mean and second for computing log_std - each has number same as number of actions: 2
 
 ![PolicyNetwork](./Images/policy_net_architecture.jpg)
 
@@ -53,8 +52,8 @@ two parallel layers one for computing mean and second for computing log_std - ea
 Most of hyperparameters are set to same values as in [SAC implementation repository](https://github.com/higgsfield/RL-Adventure-2/blob/master/7.soft%20actor-critic.ipynb). 
 
 ReplayBuffer:
-- capacity = 100000
-- sample_batch_size = 1024
+- capacity = 10000
+- sample_batch_size = 256
 
 Opimizers learning rates and params:
 - value_lr  = 3e-4
@@ -88,10 +87,15 @@ Neural networks init params:
 
 ## Training process
 
+### First attempt 
 ![Alt Text](./Images/traning_chart.png)
 
+Before code refactoring. Learning process took 1208 episodes — blue curve shows score in each of the episode while mean score is shown as red curve in the chart above. Final agent weights were saved as 'first_final_agent.pth' in previous version of 'tennis.ipynb' (that file could be found in "Checkpoints" folder but don't has saved hyperparameters as new, refactored code does). Learning was stopped after reaching mean score in 100 episode window of +0.6 (it took 1208 episodes) — while official Udacity requirement for solving the environment is +0.5 mean score in 100 episode window, which was achieved in 1198 episodes. Hyperparameters as in section above: "Hyperparameters" but replay buffer capacity set to 100000 and sample_batch_size = 1024.
 
-Learning process took 1208 episodes — blue curve shows score in each of the episode while mean score is shown as red curve in the chart above. Final agent weights were saved as 'final_agent.pth' in 'tennis.ipynb' (that file could be found in "Checkpoints" folder). Learning was stopped after reaching mean score in 100 episode window of +0.6 (it took 1208 episodes) — while official Udacity requirement for solving the environment is +0.5 mean score in 100 episode window, which was achieved in 1198 episodes.
+### Second attempt
+![Alt Text](./Images/new_learning_process.png)
+
+After code refactoring to make sure that everything works second long run has been executed (by runing main.py without jupyter notebook) but with replay buffer parameters changed. Learning process took 1081 episodes — blue curve shows score in each of the episode while mean score is shown as red curve in the chart above. Final agent weights were saved as 'second_final_agent_done_in_1081.pth'(that file could be found in "Checkpoints" folder). Learning was stopped after reaching mean score in 100 episode window of +0.6 (it took 1081 episodes) — while official Udacity requirement for solving the environment is +0.5 mean score in 100 episode window, which was achieved in 1055 episodes. Lowering the parameters seems to have helped, but since these were only single executions with the same parameters per each, we cannot carry out statistical reasoning which parameters are significantly better. Hyperparameters as in section above: "Hyperparameters".
 
 ## Agent behaviour
 
@@ -106,8 +110,8 @@ After training - keeping ball in play:
 ## Future improvement ideas
 
 - It would be very beneficial to compare achived result with SAC to result achived with other algorithms, one of possible competitive approach is fore sure: Hindsight Experience Replay (HER - [paper](https://arxiv.org/abs/1707.01495)) - a reinforcement learning algorithm that can learn from failure, that is especially good in problems with sparse rewads (isn't it simmilar to tennis?). HER can also be combined with any off-policy RL algorithm so next candidate to compere is HER can be combined with MADDPG. Such comparation should be messures in simillar way as comparation between different algorithms in [paper](https://arxiv.org/pdf/1604.06778.pdf).
-- Implementing systematic Hyperparameter Tuning is necessary to build intution about 
-influence of hyperparameters on the training process - Right way to do this is probably use one of: Random Search or Bayesian Optimization ([good post about second technique](https://distill.pub/2020/bayesian-optimization/)) but such approach require GPU for sure and presented result was achived by using local CPU power.
+- Reading about alternative approaches [PlanNet](https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html) and [Dreamer](https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html) and then decision to include them or not in the comparison of algorithms mentioned in point above.
+- Implementing systematic Hyperparameter Tuning is necessary to build intution about influence of hyperparameters on the training process - Right way to do this is probably use one of: Random Search or Bayesian Optimization ([good post about second technique](https://distill.pub/2020/bayesian-optimization/)) but such approach require GPU for sure and presented result was achived by using local CPU power.
 - Combining the design patterns used by Zhang in [his repository](https://github.com/ShangtongZhang/DeepRL) which was often mentioned during the course, would help both with code readability and personal development as a programmer for author of this repository.
 
 ## References
@@ -117,5 +121,7 @@ influence of hyperparameters on the training process - Right way to do this is p
 - [3] https://arxiv.org/pdf/1706.02275.pdf
 - [4] https://arxiv.org/abs/1707.01495
 - [5] https://arxiv.org/pdf/1604.06778.pdf
-- [6] https://distill.pub/2020/bayesian-optimization/
-- [7] https://github.com/ShangtongZhang/DeepRL
+- [6] https://ai.googleblog.com/2019/02/introducing-planet-deep-planning.html
+- [7] https://ai.googleblog.com/2020/03/introducing-dreamer-scalable.html
+- [8] https://distill.pub/2020/bayesian-optimization/
+- [9] https://github.com/ShangtongZhang/DeepRL
